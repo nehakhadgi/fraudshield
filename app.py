@@ -50,16 +50,12 @@ def calculate_drift(reference_rows, batch_rows):
         scores.append(score)
     return scores
 with monitor_tab:
-    scenario = st.radio(
-        "Incoming batch",
-        ["Stable batch", "Shifted batch"],
-        horizontal=True,
-    )
+    shift_magnitude = st.slider("Feature shift magnitude", 0.0, 4.0, 0.0, 0.25)
+    retraining_trigger = st.slider("Retraining trigger", 0.5, 2.0, 1.0, 0.1)
 
     batch_rows = [row[:] for row in reference_rows[:400]]
-    if scenario == "Shifted batch":
-        for row in batch_rows:
-            row[0] += 2.5
+    for row in batch_rows:
+        row[0] += shift_magnitude
 
     drift_scores = calculate_drift(reference_rows, batch_rows)
     drift_rows = [
@@ -70,22 +66,14 @@ with monitor_tab:
 
     st.dataframe(drift_rows, hide_index=True, width="stretch")
     st.metric("Maximum drift score", f"{maximum_drift:.2f}")
+    st.metric("Retraining trigger", f"{retraining_trigger:.2f}")
 
-    if maximum_drift > 1.0:
-        st.warning("Drift alert: investigate the incoming data and consider retraining.")
+    if maximum_drift > retraining_trigger:
+        st.error("Retraining trigger met: open a model review and retraining task.")
     else:
-        st.success("The incoming batch is within this demo's drift threshold.")
+        st.success("Monitor only: the retraining trigger has not been met.")
 
     st.write(
-        "Project policy: investigate when any feature's standardized mean shift "
-        "is greater than 1.0."
-    )    
-    st.write(
-        "Project policy: investigate when any feature's standardized mean shift "
-        "is greater than 1.0."
-    )    
-
-    st.write(
-                "Synthetic demonstration only. The signals and decisions are not suitable "
-    "for real financial or fraud-control use."
-)
+        "The trigger is a project-defined policy for this synthetic demonstration, "
+        "not a universal production threshold."
+    )

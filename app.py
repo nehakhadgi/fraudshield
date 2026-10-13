@@ -84,3 +84,8 @@ with monitor_tab:
         "Project policy: investigate when any feature's standardized mean shift "
         "is greater than 1.0."
     )    
+
+    st.write(
+            "Move the threshold to see how an operational policy changes the decision "
+        "without retraining the model."
+)

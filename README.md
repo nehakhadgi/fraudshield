@@ -1,6 +1,7 @@
 # FraudShield: Interactive ML Model Deployment & Drift Monitoring
 
 FraudShield is an end-to-end machine learning system designed to detect and monitor fraudulent financial transactions. The system trains a classification model, tracks performance metrics across different operational iterations using MLflow, and hosts an interactive Streamlit dashboard featuring live scoring simulations and real-time data drift monitoring.
+## Live Demo : https://fraudshieldgit-5cntrlwlue8nglagj9smuk.streamlit.app/
 
 ## 🚀 Key Features
 

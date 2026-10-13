@@ -86,6 +86,6 @@ with monitor_tab:
     )    
 
     st.write(
-            "Move the threshold to see how an operational policy changes the decision "
-        "without retraining the model."
+                "Synthetic demonstration only. The signals and decisions are not suitable "
+    "for real financial or fraud-control use."
 )
